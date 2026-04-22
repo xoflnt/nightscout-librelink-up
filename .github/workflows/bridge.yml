@@ -1,0 +1,24 @@
+name: LibreLink Bridge
+on:
+  schedule:
+    - cron: '* * * * *'
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm start
+        env:
+          LINK_UP_USERNAME: ${{ secrets.LINK_UP_USERNAME }}
+          LINK_UP_PASSWORD: ${{ secrets.LINK_UP_PASSWORD }}
+          LINK_UP_REGION: ${{ secrets.LINK_UP_REGION }}
+          NIGHTSCOUT_URL: ${{ secrets.NIGHTSCOUT_URL }}
+          NIGHTSCOUT_API_TOKEN: ${{ secrets.NIGHTSCOUT_API_TOKEN }}
+          LINK_UP_TIME_INTERVAL: "1"
+          LOG_LEVEL: "info"
